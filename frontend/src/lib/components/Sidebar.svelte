@@ -25,32 +25,9 @@
 >
   <div class="sidebar-header">
     <div class="brand">
-      <div class="logo-mark" aria-hidden="true">
-        <svg viewBox="0 0 64 64" role="img" aria-label="Tabula AI logo">
-          <defs>
-            <linearGradient id="brandBg" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#07131a" />
-              <stop offset="100%" stop-color="#0f2731" />
-            </linearGradient>
-            <linearGradient id="orbitA" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#2df9c5" />
-              <stop offset="100%" stop-color="#36b9ff" />
-            </linearGradient>
-            <linearGradient id="orbitB" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#83f9ff" />
-              <stop offset="100%" stop-color="#67ffd6" />
-            </linearGradient>
-          </defs>
-          <rect x="4" y="4" width="56" height="56" rx="18" fill="url(#brandBg)" />
-          <circle cx="32" cy="32" r="18" stroke="url(#orbitA)" stroke-width="4" fill="none" opacity="0.95" />
-          <path d="M15 32c0-9.4 7.6-17 17-17" stroke="url(#orbitB)" stroke-width="4" stroke-linecap="round" fill="none" />
-          <path d="M24 22h20" stroke="#eaffff" stroke-width="3.6" stroke-linecap="round" />
-          <path d="M32 22v20" stroke="#eaffff" stroke-width="4.1" stroke-linecap="round" />
-          <path d="M25 42h14" stroke="#eaffff" stroke-width="2.6" stroke-linecap="round" opacity="0.9" />
-          <circle cx="47" cy="20" r="3" fill="#9dfcff" />
-          <circle cx="17" cy="41" r="2.1" fill="#5ec6ff" opacity="0.9" />
-        </svg>
-      </div>
+      <div class="logo-mark">
+  <img src="/logo_tabula.png" alt="Tabula AI logo" />
+</div>
       {#if !collapsed}
         <div class="brand-text-wrap">
           <span class="brand-title">Tabula AI</span>
@@ -125,22 +102,28 @@
 }
 
 .logo-mark {
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
   border-radius: 15px;
-  display: grid;
-  place-items: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   flex: 0 0 auto;
-  box-shadow: 0 10px 25px rgba(5, 25, 31, 0.32), 0 0 18px rgba(45, 249, 197, 0.24);
+
+  box-shadow: 0 10px 25px rgba(5, 25, 31, 0.32),
+              0 0 18px rgba(45, 249, 197, 0.24);
+
   background: radial-gradient(circle at 15% 12%, rgba(121, 255, 240, 0.25), rgba(8, 24, 31, 0));
 }
 
-.logo-mark svg {
-  width: 100%;
-  height: 100%;
+.logo-mark img {
+  width: 92%;
+  height: 92%;
+  object-fit: contain;
   display: block;
 }
-
 .brand-text-wrap {
   display: flex;
   flex-direction: column;
@@ -149,17 +132,16 @@
 
 .brand-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  font-size: 0.96rem;
+  font-weight: 900;
+  font-size: 1.20rem;
   letter-spacing: 0.02em;
   color: #14303a;
 }
 
 .brand-subtitle {
-  font-size: 0.64rem;
-  color: #3e5e69;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  opacity: 0.8;
 }
 
 .collapse-btn {
@@ -185,12 +167,32 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 12px;
+
+  padding: 10px 14px;
+  margin: 4px 10px;
+
   border-radius: 12px;
-  font-size: 0.89rem;
-  color: #41545d;
+
   text-decoration: none;
+  color: #3e5e69;
+
   transition: all 0.2s ease;
+}
+
+
+.nav-item.active {
+  background: linear-gradient(
+    90deg,
+    rgba(76, 201, 240, 0.18),
+    rgba(76, 201, 240, 0.12)
+  );
+
+  border: 1px solid rgba(76, 201, 240, 0.35);
+  color: #0f766e;
+}
+
+.sidebar-nav {
+  padding: 10px 6px;
 }
 
 .icon-wrap {
