@@ -43,10 +43,4 @@ def embed_text(texts):
         batch_size=32
     )
 
-    vectors = vectors.tolist()
-
-    # If single text was passed, return a single vector
-    if len(vectors) == 1:
-        return vectors[0]
-
-    return vectors
+    return vectors.tolist()
