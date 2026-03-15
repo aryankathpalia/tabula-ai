@@ -1,0 +1,109 @@
+ 
+# ENVIRONMENT VARIABLES
+ 
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+
+ 
+# NODE / FRONTEND
+ 
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# SvelteKit build output
+.svelte-kit/
+build/
+dist/
+.vercel/
+.output/
+
+# Vite
+vite.config.ts.timestamp-*
+
+ 
+# PYTHON / BACKEND
+ 
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc.*
+*.sqlite3
+*.db
+*.log
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+ 
+# DATABASE FILES
+ 
+*.db
+*.sqlite
+*.sqlite3
+
+ 
+# FILE STORAGE (OPTIONAL)
+ 
+uploads/
+documents/
+
+ 
+# PDF PROCESSING TEMP FILES
+ 
+*.pdf.tmp
+*.pdf.cache
+
+ 
+# OS FILES
+ 
+.DS_Store
+Thumbs.db
+desktop.ini
+
+ 
+# IDE FILES
+ 
+.vscode/
+.idea/
+*.swp
+*.swo
+
+ 
+# TEST / CACHE
+ 
+.pytest_cache/
+.cache/
+
+ 
+# LOGS
+ 
+*.log
+
+ 
+# PACKAGE LOCKS 
+ 
+
+# package-lock.json
+# yarn.lock
+
+# ML models
+backend/models/
+
+# Uploaded documents
+backend/uploaded_files/
+
+# Training datasets
+backend/*.csv
+backend/*.zip
+
+!frontend/src/routes/documents/
