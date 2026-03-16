@@ -25,6 +25,7 @@
 		"vite": "^7.3.1"
 	},
 	"dependencies": {
+		"lottie-web": "^5.13.0",
 		"lucide-svelte": "^0.577.0",
 		"marked": "^17.0.3",
 		"pdfjs-dist": "^5.4.624"

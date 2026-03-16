@@ -246,6 +246,21 @@
   box-shadow: 0 0 0 5px rgba(14, 164, 107, 0.14);
 }
 
+
+.sidebar.collapsed .nav-item {
+  margin: 6px auto;
+  padding: 10px;
+  justify-content: center;
+}
+
+.sidebar.collapsed .icon-wrap {
+  margin: 0;
+}
+
+.sidebar.collapsed .nav-item.active {
+  width: 42px;
+}
+
 @media (max-width: 800px) {
   .sidebar {
     margin: 0;

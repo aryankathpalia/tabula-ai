@@ -12,9 +12,14 @@
   import Github from 'lucide-svelte/icons/github';
   import Mail from 'lucide-svelte/icons/mail';
 
+
+  import lottie from "lottie-web";
+
+  let animationContainers: HTMLDivElement[] = [];
   let stepIndex = 0;
+  let lottieInstances: any[] = [];
   let activeAnimation = 0;
-  let videoEls: HTMLVideoElement[] = [];
+
 
   const email = 'aryan.kathpalia2000@gmail.com';
   let copied = false;
@@ -52,28 +57,67 @@
     if (stepIndex > 0) stepIndex--;
   }
 
-  onMount(() => {
-    function playAnimation(index: number) {
-      videoEls.forEach((v, i) => {
-        if (!v) return;
-        if (i === index) {
-          v.currentTime = 0;
-          v.play();
-        } else {
-          v.pause();
-          v.currentTime = 0;
-        }
-      });
+function loadAnimation(container: HTMLDivElement, index: number) {
+
+  const animationFiles = [
+    "/animations/upload.json",
+    "/animations/analyze.json",
+    "/animations/risk.json",
+    "/animations/review.json",
+    "/animations/chat.json"
+  ];
+
+  const anim = lottie.loadAnimation({
+    container: container,
+    renderer: "svg",
+    loop: false,
+    autoplay: false,
+    path: animationFiles[index]
+  });
+
+  anim.addEventListener("complete", () => {
+    anim.goToAndStop(0, true);
+  });
+
+  lottieInstances[index] = anim;
+
+}
+
+
+import { afterUpdate } from "svelte";
+
+afterUpdate(() => {
+
+  animationContainers.forEach((container, i) => {
+
+    if (!container || container.dataset.loaded) return;
+
+    loadAnimation(container, i);
+
+    container.dataset.loaded = "true";
+
+  });
+
+});
+
+
+onMount(() => {
+
+  const interval = setInterval(() => {
+
+    const anim = lottieInstances[activeAnimation];
+
+    if (anim) {
+      anim.goToAndPlay(0, true);
     }
 
-    playAnimation(0);
-    const interval = setInterval(() => {
-      activeAnimation = (activeAnimation + 1) % steps.length;
-      playAnimation(activeAnimation);
-    }, 3200);
+    activeAnimation = (activeAnimation + 1) % 5;
 
-    return () => clearInterval(interval);
-  });
+  }, 2200);
+
+  return () => clearInterval(interval);
+
+});
 </script>
 
 <div class="about-page space-y-6">
@@ -117,18 +161,10 @@
       {#each steps.slice(stepIndex, stepIndex + 3) as step, i (stepIndex + i)}
         <article class="step-card">
           <div class="step-video">
-<video
-  autoplay
-  muted
-  loop
-  playsinline
-  preload="auto"
-  controlslist="nodownload noplaybackrate"
-  bind:this={videoEls[stepIndex + i]}
-  class:active={activeAnimation === stepIndex + i}
->
-  <source src={`/webm${stepIndex + i + 1}.webm`} type="video/webm" />
-</video>
+<div
+  class="lottie-animation"
+  bind:this={animationContainers[stepIndex + i]}
+></div>
           </div>
           <p class="step-label">Step {stepIndex + i + 1}</p>
           <h3>{step.title}</h3>
@@ -209,18 +245,15 @@
 .step-video {
   border-radius: 12px;
   background: rgba(17, 34, 40, 0.07);
-  height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: 160px;
+  display: grid;
+  place-items: center;
   margin-bottom: 12px;
   overflow: hidden;
 }
-.step-video video {
-  width: 80%;
+.lottie-animation {
+  width: 140px;
   height: 140px;
-  object-fit: contain;
-  pointer-events: none;
 }
 .step-label { margin: 0; color: #667a81; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; }
 .step-card h3 { margin: 6px 0 4px; font-size: 1.04rem; }
