@@ -117,9 +117,17 @@
       {#each steps.slice(stepIndex, stepIndex + 3) as step, i (stepIndex + i)}
         <article class="step-card">
           <div class="step-video">
-            <video muted playsinline bind:this={videoEls[stepIndex + i]} class:active={activeAnimation === stepIndex + i}>
-              <source src={`/webm${stepIndex + i + 1}.webm`} type="video/webm" />
-            </video>
+<video
+  autoplay
+  muted
+  loop
+  playsinline
+  preload="auto"
+  bind:this={videoEls[stepIndex + i]}
+  class:active={activeAnimation === stepIndex + i}
+>
+  <source src={`/webm${stepIndex + i + 1}.webm`} type="video/webm" />
+</video>
           </div>
           <p class="step-label">Step {stepIndex + i + 1}</p>
           <h3>{step.title}</h3>
@@ -197,8 +205,21 @@
 .nav-actions { display: flex; gap: 8px; }
 .journey-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .step-card { border: 1px solid rgba(17, 34, 40, 0.1); border-radius: 14px; background: #fff; padding: 14px; }
-.step-video { border-radius: 12px; background: rgba(17, 34, 40, 0.07); min-height: 160px; display: grid; place-items: center; margin-bottom: 12px; overflow: hidden; }
-.step-video video { width: 100%; max-height: 200px; object-fit: cover; }
+.step-video {
+  border-radius: 12px;
+  background: rgba(17, 34, 40, 0.07);
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.step-video video {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+}
 .step-label { margin: 0; color: #667a81; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; }
 .step-card h3 { margin: 6px 0 4px; font-size: 1.04rem; }
 .step-card p { margin: 0; color: #5b7078; line-height: 1.55; }
