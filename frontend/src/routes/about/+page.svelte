@@ -123,6 +123,7 @@
   loop
   playsinline
   preload="auto"
+  controlslist="nodownload noplaybackrate"
   bind:this={videoEls[stepIndex + i]}
   class:active={activeAnimation === stepIndex + i}
 >
@@ -216,9 +217,10 @@
   overflow: hidden;
 }
 .step-video video {
-  width: 100%;
-  height: 160px;
+  width: 80%;
+  height: 140px;
   object-fit: contain;
+  pointer-events: none;
 }
 .step-label { margin: 0; color: #667a81; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; }
 .step-card h3 { margin: 6px 0 4px; font-size: 1.04rem; }
