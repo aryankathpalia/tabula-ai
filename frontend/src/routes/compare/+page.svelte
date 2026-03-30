@@ -204,12 +204,15 @@
   }
 
   function toggleCell(key: string) {
-    if (expandedCells.has(key)) {
-      expandedCells.delete(key);
+    const newSet = new Set(expandedCells);
+
+    if (newSet.has(key)) {
+      newSet.delete(key);
     } else {
-      expandedCells.add(key);
+      newSet.add(key);
     }
-    expandedCells = new Set(expandedCells);
+
+    expandedCells = newSet;
   }
 
   async function upload() {
@@ -533,14 +536,19 @@
                   <td
                     class:diff-cell={clauseDiff}
                     class="align-top cursor-pointer transition-all duration-200 ease-in-out hover:bg-[rgba(0,0,0,0.02)]"
-                    on:click={() => toggleCell(cellKey)}
-                    title={expandedCells.has(cellKey) ? 'Click to collapse' : 'Click to expand'}
+                    on:click={() => {
+                      console.log('clicked', cellKey);
+                      toggleCell(cellKey);
+                    }}
+                    title={isExpanded ? 'Click to collapse' : 'Click to expand'}
                   >
-                    <div class={isExpanded ? 'whitespace-normal leading-relaxed' : 'line-clamp-3 leading-relaxed'}>
+                    <div class={isExpanded ? 'whitespace-normal leading-relaxed' : 'line-clamp-3 overflow-hidden leading-relaxed'}>
                       {text}
                     </div>
                     {#if !isExpanded}
-                      <div class="mt-1 text-[10px] text-gray-400">Click to expand</div>
+                      <div class="mt-1 text-[10px] text-gray-400 opacity-70">
+                        Click to expand
+                      </div>
                     {/if}
                   </td>
                 {/each}

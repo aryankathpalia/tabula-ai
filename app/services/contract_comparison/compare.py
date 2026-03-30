@@ -99,21 +99,33 @@ def smart_shorten(text: str, max_chars=300):
 
 
 
-def smart_clause_preview(text: str, max_chars=400):
+def smart_clause_preview(text: str, max_chars=300):
     sentences = re.split(r'(?<=[.])\s+', text)
 
+    # prioritize strong sentences
     for s in sentences:
-        s = s.strip()
-        if len(s) > 60 and len(s) < max_chars:
-            return s
+        s_clean = s.strip().lower()
 
-    # fallback: truncate cleanly
+        if len(s_clean) < 40:
+            continue
+
+        if any(k in s_clean for k in [
+            "shall", "must", "agree", "liable", "terminate", "pay"
+        ]):
+            return s.strip()
+
+    # fallback: first meaningful sentence
+    for s in sentences:
+        if len(s.strip()) > 50:
+            return s.strip()
+
+    # fallback: truncate
     if len(text) > max_chars:
         truncated = text[:max_chars]
         last_period = truncated.rfind(".")
         if last_period > 100:
             return truncated[:last_period + 1]
-        return truncated.strip() + "..."
+        return truncated + "..."
 
     return text
      
