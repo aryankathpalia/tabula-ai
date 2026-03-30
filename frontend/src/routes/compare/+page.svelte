@@ -33,6 +33,7 @@
   let dragB = false;
   let loadingStep = 0;
   let loadingTimer: ReturnType<typeof setInterval> | null = null;
+  let expandedCells = new Set<string>();
 
   const loadingSteps = [
     "Extracting text",
@@ -200,6 +201,15 @@
         items: grouped[key].slice(0, 4)
       }))
       .filter((section) => section.items.length > 0);
+  }
+
+  function toggleCell(key: string) {
+    if (expandedCells.has(key)) {
+      expandedCells.delete(key);
+    } else {
+      expandedCells.add(key);
+    }
+    expandedCells = new Set(expandedCells);
   }
 
   async function upload() {
@@ -517,7 +527,28 @@
               <tr class:striped={rowIndex % 2 === 1}>
                 <td class="sticky-col clause-name">{key}</td>
                 {#each result.documents as doc}
-                  <td class:diff-cell={clauseDiff}>{safeText(val[doc])}</td>
+                  {@const cellKey = `${rowIndex}-${doc}`}
+                  {@const text = safeText(val[doc])}
+                  <td
+                    class:diff-cell={clauseDiff}
+                    class="align-top cursor-pointer transition-all duration-200 ease-in-out hover:bg-[rgba(0,0,0,0.02)]"
+                    on:click={() => toggleCell(cellKey)}
+                    title={expandedCells.has(cellKey) ? 'Click to collapse' : 'Click to expand'}
+                  >
+                    {#if expandedCells.has(cellKey)}
+                      <div class="leading-relaxed">{text}</div>
+                    {:else}
+                      <div class="relative">
+                        <div
+                          class="leading-relaxed"
+                          style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;"
+                        >
+                          {text}
+                        </div>
+                        <span class="absolute bottom-0 right-0 text-[10px] text-gray-400">expand</span>
+                      </div>
+                    {/if}
+                  </td>
                 {/each}
               </tr>
             {/each}
@@ -555,7 +586,7 @@
                 {/each}
               </div>
             {:else}
-              <p class="text-sm text-[#72858d]">No key data extracted</p>
+              <p class="text-sm text-[#72858d]">No significant financial or duration terms detected</p>
             {/if}
           </article>
         {/each}

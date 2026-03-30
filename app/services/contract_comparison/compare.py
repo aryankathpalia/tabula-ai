@@ -173,22 +173,7 @@ def build_comparison(grouped, doc_names):
             if not best:
                 continue
 
-            entities = best.get("entities", [])
-
-            # pick best entity value
-            entity_value = None
-
-            for ent in entities:
-                if ent["type"] in ["Duration", "Financial", "Percentage"]:
-                    entity_value = ent["value"]
-                    break
-
-            text = smart_shorten(best["text"])
-
-            if entity_value:
-                value = f"{text} ({entity_value})"
-            else:
-                value = text
+            value = best["text"]
 
             output[label][doc] = value
 
