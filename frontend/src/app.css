@@ -166,6 +166,14 @@ a {
 	box-shadow: 0 9px 24px rgba(12, 132, 86, 0.3);
 }
 
+.clamp-3 {
+	line-clamp: 3;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
 .btn-ghost {
 	color: var(--text);
 	background: rgba(255, 255, 255, 0.84);

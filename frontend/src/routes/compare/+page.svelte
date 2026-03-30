@@ -530,21 +530,24 @@
                   {@const isExpanded = !!expandedCells[cellKey]}
                   <td class:diff-cell={clauseDiff} class="align-top">
                     <div
-                      class="cursor-pointer rounded p-1 transition-all duration-200 ease-in-out hover:bg-[rgba(0,0,0,0.02)]"
+                      class="cursor-pointer rounded p-2 transition-all duration-200 ease-in-out hover:bg-[rgba(0,0,0,0.02)]"
                       role="button"
                       tabindex="0"
-                      on:click={() => toggleCell(cellKey)}
+                      on:click={() => {
+                        console.log('clicked:', cellKey);
+                        toggleCell(cellKey);
+                      }}
                       on:keydown={(event) => (event.key === 'Enter' || event.key === ' ') && toggleCell(cellKey)}
                       title={isExpanded ? 'Click to collapse' : 'Click to expand'}
                     >
-                      <div class={isExpanded ? 'whitespace-normal leading-relaxed' : 'clamp-3 leading-relaxed'}>
+                      <p class={isExpanded ? 'whitespace-normal leading-relaxed' : 'clamp-3 leading-relaxed'}>
                         {text}
-                      </div>
+                      </p>
 
                       {#if !isExpanded}
-                        <div class="mt-1 text-[10px] text-gray-400 opacity-70">
+                        <span class="text-[10px] text-gray-400">
                           Click to expand
-                        </div>
+                        </span>
                       {/if}
                     </div>
                   </td>
@@ -699,14 +702,6 @@
   .compare-cta {
     min-width: 230px;
   }
-
-  .clamp-3 {
-  line-clamp: 3;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
 
   .feature-card h3 {
     margin: 0;
