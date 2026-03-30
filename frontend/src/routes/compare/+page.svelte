@@ -41,6 +41,8 @@
     "Generating AI insights"
   ];
 
+  const API = import .meta.env.VITE_API_BASE_URL;
+
   const featureCards = [
     {
       title: "Risk Detection",
@@ -216,7 +218,7 @@
     files.forEach((f) => formData.append("files", f));
 
     try {
-      const res = await fetch("http://localhost:8000/compare/", {
+      const res = await fetch(`${API}/compare/`, {
         method: "POST",
         body: formData
       });
@@ -230,7 +232,7 @@
 
       loadingInsights = true;
 
-      const insightsRes = await fetch("http://localhost:8000/compare/insights/", {
+      const insightsRes = await fetch(`${API}/compare/insights/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
