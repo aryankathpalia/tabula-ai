@@ -41,7 +41,7 @@
     "Generating AI insights"
   ];
 
-  const API = import .meta.env.VITE_API_BASE_URL;
+  const API = import.meta.env.VITE_API_URL;
 
   const featureCards = [
     {
