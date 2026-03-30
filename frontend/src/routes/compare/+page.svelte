@@ -537,7 +537,7 @@
                       on:keydown={(event) => (event.key === 'Enter' || event.key === ' ') && toggleCell(cellKey)}
                       title={isExpanded ? 'Click to collapse' : 'Click to expand'}
                     >
-                      <div class={isExpanded ? 'whitespace-normal leading-relaxed' : 'line-clamp-3 overflow-hidden leading-relaxed'}>
+                      <div class={isExpanded ? 'whitespace-normal leading-relaxed' : 'clamp-3 leading-relaxed'}>
                         {text}
                       </div>
 
@@ -699,6 +699,14 @@
   .compare-cta {
     min-width: 230px;
   }
+
+  .clamp-3 {
+  line-clamp: 3;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
   .feature-card h3 {
     margin: 0;
