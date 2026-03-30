@@ -529,24 +529,18 @@
                 {#each result.documents as doc}
                   {@const cellKey = `${rowIndex}-${doc}`}
                   {@const text = safeText(val[doc])}
+                  {@const isExpanded = expandedCells.has(cellKey)}
                   <td
                     class:diff-cell={clauseDiff}
                     class="align-top cursor-pointer transition-all duration-200 ease-in-out hover:bg-[rgba(0,0,0,0.02)]"
                     on:click={() => toggleCell(cellKey)}
                     title={expandedCells.has(cellKey) ? 'Click to collapse' : 'Click to expand'}
                   >
-                    {#if expandedCells.has(cellKey)}
-                      <div class="leading-relaxed">{text}</div>
-                    {:else}
-                      <div class="relative">
-                        <div
-                          class="leading-relaxed"
-                          style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;"
-                        >
-                          {text}
-                        </div>
-                        <span class="absolute bottom-0 right-0 text-[10px] text-gray-400">expand</span>
-                      </div>
+                    <div class={isExpanded ? 'whitespace-normal leading-relaxed' : 'line-clamp-3 leading-relaxed'}>
+                      {text}
+                    </div>
+                    {#if !isExpanded}
+                      <div class="mt-1 text-[10px] text-gray-400">Click to expand</div>
                     {/if}
                   </td>
                 {/each}

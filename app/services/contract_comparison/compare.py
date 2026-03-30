@@ -98,6 +98,24 @@ def smart_shorten(text: str, max_chars=300):
     return safe_truncate(text, max_chars)
 
 
+
+def smart_clause_preview(text: str, max_chars=400):
+    sentences = re.split(r'(?<=[.])\s+', text)
+
+    for s in sentences:
+        s = s.strip()
+        if len(s) > 60 and len(s) < max_chars:
+            return s
+
+    # fallback: truncate cleanly
+    if len(text) > max_chars:
+        truncated = text[:max_chars]
+        last_period = truncated.rfind(".")
+        if last_period > 100:
+            return truncated[:last_period + 1]
+        return truncated.strip() + "..."
+
+    return text
      
 # SELECT BEST CLAUSE
      
@@ -173,7 +191,7 @@ def build_comparison(grouped, doc_names):
             if not best:
                 continue
 
-            value = best["text"]
+            value = smart_clause_preview(best["text"])
 
             output[label][doc] = value
 
