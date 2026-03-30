@@ -183,7 +183,12 @@ def build_comparison(grouped, doc_names):
                     entity_value = ent["value"]
                     break
 
-            value = entity_value or smart_shorten(best["text"])
+            text = smart_shorten(best["text"])
+
+            if entity_value:
+                value = f"{text} ({entity_value})"
+            else:
+                value = text
 
             output[label][doc] = value
 
