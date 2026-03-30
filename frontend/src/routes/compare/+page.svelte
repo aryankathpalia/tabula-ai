@@ -33,7 +33,7 @@
   let dragB = false;
   let loadingStep = 0;
   let loadingTimer: ReturnType<typeof setInterval> | null = null;
-  let expandedCells = new Set<string>();
+  let expandedCells: Record<string, boolean> = {};
 
   const loadingSteps = [
     "Extracting text",
@@ -204,15 +204,10 @@
   }
 
   function toggleCell(key: string) {
-    const newSet = new Set(expandedCells);
-
-    if (newSet.has(key)) {
-      newSet.delete(key);
-    } else {
-      newSet.add(key);
-    }
-
-    expandedCells = newSet;
+    expandedCells = {
+      ...expandedCells,
+      [key]: !expandedCells[key]
+    };
   }
 
   async function upload() {
@@ -532,24 +527,26 @@
                 {#each result.documents as doc}
                   {@const cellKey = `${rowIndex}-${doc}`}
                   {@const text = safeText(val[doc])}
-                  {@const isExpanded = expandedCells.has(cellKey)}
-                  <td
-                    class:diff-cell={clauseDiff}
-                    class="align-top cursor-pointer transition-all duration-200 ease-in-out hover:bg-[rgba(0,0,0,0.02)]"
-                    on:click={() => {
-                      console.log('clicked', cellKey);
-                      toggleCell(cellKey);
-                    }}
-                    title={isExpanded ? 'Click to collapse' : 'Click to expand'}
-                  >
-                    <div class={isExpanded ? 'whitespace-normal leading-relaxed' : 'line-clamp-3 overflow-hidden leading-relaxed'}>
-                      {text}
-                    </div>
-                    {#if !isExpanded}
-                      <div class="mt-1 text-[10px] text-gray-400 opacity-70">
-                        Click to expand
+                  {@const isExpanded = !!expandedCells[cellKey]}
+                  <td class:diff-cell={clauseDiff} class="align-top">
+                    <div
+                      class="cursor-pointer rounded p-1 transition-all duration-200 ease-in-out hover:bg-[rgba(0,0,0,0.02)]"
+                      role="button"
+                      tabindex="0"
+                      on:click={() => toggleCell(cellKey)}
+                      on:keydown={(event) => (event.key === 'Enter' || event.key === ' ') && toggleCell(cellKey)}
+                      title={isExpanded ? 'Click to collapse' : 'Click to expand'}
+                    >
+                      <div class={isExpanded ? 'whitespace-normal leading-relaxed' : 'line-clamp-3 overflow-hidden leading-relaxed'}>
+                        {text}
                       </div>
-                    {/if}
+
+                      {#if !isExpanded}
+                        <div class="mt-1 text-[10px] text-gray-400 opacity-70">
+                          Click to expand
+                        </div>
+                      {/if}
+                    </div>
                   </td>
                 {/each}
               </tr>
