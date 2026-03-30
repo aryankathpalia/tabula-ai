@@ -4,6 +4,7 @@
   import LayoutDashboard from 'lucide-svelte/icons/layout-dashboard';
   import FileText from 'lucide-svelte/icons/file-text';
   import Shield from 'lucide-svelte/icons/shield';
+  import GitCompareArrows from 'lucide-svelte/icons/git-compare-arrows';
   import MessageSquare from 'lucide-svelte/icons/message-square';
   import Settings from 'lucide-svelte/icons/settings';
 
@@ -13,6 +14,7 @@
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Documents', href: '/documents', icon: FileText },
     { name: 'Risk Analysis', href: '/risk', icon: Shield },
+    { name: 'Compare', href: '/compare', icon: GitCompareArrows },
     { name: 'Chat', href: '/team', icon: MessageSquare },
     { name: 'About', href: '/about', icon: Settings }
   ];

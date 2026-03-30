@@ -14,6 +14,13 @@ from app.routes import document_chat
 from app.services.transformer_classifier import get_classifier
 
 
+from app.routes.contract_compare import router as compare_router
+
+from app.routes.compare_insights import router as insights_router
+
+
+
+
 
 app = FastAPI(title="Document Intelligence API")
 
@@ -42,6 +49,8 @@ app.include_router(analytics_router)
 app.include_router(chat.router)
 app.include_router(document_chat.router)
 
+app.include_router(compare_router)
+app.include_router(insights_router)
 
 @app.on_event("startup")
 def load_models():
